@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>نظام إدارة العيادة الطبية</title>
+
+<style>
+
+/* =========================
+   الإعدادات العامة
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Tahoma,sans-serif;
+    background:#f3f7fb;
+    color:#222;
+}
+
+button,
+input,
+select,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* =========================
+   القائمة الجانبية
+========================= */
+
+.sidebar{
+    position:fixed;
+    right:0;
+    top:0;
+    width:250px;
+    height:100vh;
+    background:#075b9d;
+    color:white;
+    padding:20px 12px;
+    z-index:1000;
+    overflow-y:auto;
+    transition:.3s;
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.brand-icon{
+    font-size:42px;
+    margin-bottom:8px;
+}
+
+.brand h2{
+    font-size:19px;
+    margin:0;
+}
+
+.menu-item{
+    padding:14px;
+    margin:6px 0;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.menu-item:hover,
+.menu-item.active{
+    background:rgba(255,255,255,.2);
+}
+
+.logout{
+    margin-top:25px;
+    background:rgba(255,0,0,.15);
+}
+
+/* =========================
+   المحتوى
+========================= */
+
+.main-content{
+    margin-right:250px;
+    padding:20px;
+    min-height:100vh;
+}
+
+.topbar{
+    background:white;
+    padding:15px 20px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.topbar h1{
+    margin:0;
+    color:#075b9d;
+    font-size:24px;
+}
+
+.user-info{
+    color:#555;
+}
+
+.menu-button{
+    display:none;
+    border:0;
+    background:#075b9d;
+    color:white;
+    border-radius:8px;
+    padding:9px 13px;
+    font-size:21px;
+}
+
+/* =========================
+   الصفحات
+========================= */
+
+.page{
+    display:none;
+}
+
+.page.active-page{
+    display:block;
+}
+
+/* =========================
+   الترحيب
+========================= */
+
+.welcome-box{
+    background:white;
+    padding:25px;
+    border-radius:13px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.welcome-box h2{
+    color:#075b9d;
+    margin-top:0;
+}
+
+.welcome-box p{
+    color:#666;
+    line-height:2;
+}
+
+/* =========================
+   الإحصائيات
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-card{
+    background:white;
+    padding:22px;
+    text-align:center;
+    border-radius:13px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.stat-icon{
+    font-size:34px;
+}
+
+.stat-title{
+    color:#666;
+    margin:8px 0;
+}
+
+.stat-number{
+    color:#075b9d;
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* =========================
+   الأقسام
+========================= */
+
+.section{
+    background:white;
+    padding:22px;
+    border-radius:13px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+.section-title{
+    color:#075b9d;
+    margin-top:0;
+}
+
+/* =========================
+   الإجراءات السريعة
+========================= */
+
+.quick-actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.quick-actions button{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:9px;
+    padding:15px;
+    font-size:16px;
+}
+
+.quick-actions button:hover{
+    background:#075b9d;
+    color:white;
+}
+
+/* =========================
+   النماذج
+========================= */
+
+.form-box{
+    background:#f7fafc;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.form-group label{
+    font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    border:1px solid #ccc;
+    border-radius:8px;
+    padding:11px;
+    background:white;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    border-color:#075b9d;
+}
+
+.full-width{
+    grid-column:1/-1;
+}
+
+.btn{
+    border:0;
+    border-radius:7px;
+    padding:10px 15px;
+    color:white;
+    margin:3px;
+}
+
+.save-btn{
+    background:#2e8b57;
+}
+
+.edit-btn{
+    background:#e49b19;
+}
+
+.delete-btn{
+    background:#d73535;
+}
+
+.gray-btn{
+    background:#777;
+}
+
+/* =========================
+   الجداول
+========================= */
+
+.table-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th{
+    background:#075b9d;
+    color:white;
+    padding:11px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+.empty-message{
+    padding:25px;
+    color:#777;
+}
+
+/* =========================
+   الموبايل
+========================= */
+
+@media(max-width:800px){
+
+    .sidebar{
+        right:-260px;
+    }
+
+    .sidebar.open{
+        right:0;
+    }
+
+    .main-content{
+        margin-right:0;
+        padding:10px;
+    }
+
+    .menu-button{
+        display:block;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .topbar h1{
+        font-size:19px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+    }
+
+    .quick-actions{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full-width{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .quick-actions{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     القائمة الجانبية
+========================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">⚕️</div>
+
+        <h2>إدارة العيادة الطبية</h2>
+
+    </div>
+
+
+    <div class="menu-item active"
+         onclick="showPage('home',this)">
+        🏠 الرئيسية
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('patients',this)">
+        👤 المرضى
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('doctors',this)">
+        👨‍⚕️ الأطباء
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('appointments',this)">
+        📅 المواعيد
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('visits',this)">
+        🩺 الزيارات
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('services',this)">
+        🧾 الخدمات
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('payments',this)">
+        💰 المدفوعات
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('reports',this)">
+        📊 التقارير
+    </div>
+
+
+    <div class="menu-item"
+         onclick="showPage('users',this)">
+        👥 المستخدمون
+    </div>
+
+
+    <div class="menu-item logout"
+         onclick="logout()">
+        🚪 تسجيل الخروج
+    </div>
+
+</aside>
+
+
+
+<!-- =========================
+     المحتوى
+========================= -->
+
+<main class="main-content">
+
+
+<div class="topbar">
+
+    <button class="menu-button"
+            onclick="toggleMenu()">
+        ☰
+    </button>
+
+
+    <h1 id="pageTitle">
+        لوحة التحكم
+    </h1>
+
+
+    <div class="user-info">
+        👤 مدير النظام
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     الرئيسية
+========================= -->
+
+<section class="page active-page"
+         id="home">
+
+
+<div class="welcome-box">
+
+    <h2>
+        مرحبًا بك في نظام إدارة العيادة الطبية
+    </h2>
+
+    <p>
+        يمكنك من خلال النظام إدارة بيانات المرضى
+        والأطباء والمواعيد والزيارات والخدمات
+        والمدفوعات والتقارير.
+    </p>
+
+</div>
+
+
+
+<div class="stats">
+
+
+<div class="stat-card">
+
+    <div class="stat-icon">👤</div>
+
+    <div class="stat-title">
+        إجمالي المرضى
+    </div>
+
+    <div class="stat-number"
+         id="patientCount">
+        0
+    </div>
+
+</div>
+
+
+
+<div class="stat-card">
+
+    <div class="stat-icon">👨‍⚕️</div>
+
+    <div class="stat-title">
+        الأطباء
+    </div>
+
+    <div class="stat-number"
+         id="doctorCount">
+        0
+    </div>
+
+</div>
+
+
+
+<div class="stat-card">
+
+    <div class="stat-icon">📅</div>
+
+    <div class="stat-title">
+        المواعيد
+    </div>
+
+    <div class="stat-number"
+         id="appointmentCount">
+        0
+    </div>
+
+</div>
+
+
+
+<div class="stat-card">
+
+    <div class="stat-icon">💰</div>
+
+    <div class="stat-title">
+        المدفوعات
+    </div>
+
+    <div class="stat-number"
+         id="paymentCount">
+        0
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="section">
+
+<h2 class="section-title">
+    ⚡ الإجراءات السريعة
+</h2>
+
+
+<div class="quick-actions">
+
+
+<button onclick="showPage('patients')">
+    ➕ إضافة مريض
+</button>
+
+
+<button onclick="showPage('doctors')">
+    👨‍⚕️ إضافة طبيب
+</button>
+
+
+<button onclick="showPage('appointments')">
+    📅 حجز موعد
+</button>
+
+
+<button onclick="showPage('visits')">
+    🩺 تسجيل زيارة
+</button>
+
+
+<button onclick="showPage('payments')">
+    💰 تسجيل دفعة
+</button>
+
+
+<button onclick="showPage('reports')">
+    📊 التقارير
+</button>
+
+
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =========================
+     المرضى
+========================= -->
+
+<section class="page"
+         id="patients">
+
+<div class="section">
+
+<h2 class="section-title">
+    👤 إدارة المرضى
+</h2>
+
+
+<div class="form-box">
+
+<form id="patientForm">
+
+
+<input type="hidden"
+       id="patientId">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم المريض
+</label>
+
+<input type="text"
+       id="patientName"
+       placeholder="اسم المريض"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    رقم الهاتف
+</label>
+
+<input type="text"
+       id="patientPhone"
+       placeholder="رقم الهاتف"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    النوع
+</label>
+
+<select id="patientGender">
+
+<option value="">
+    اختر النوع
+</option>
+
+<option value="ذكر">
+    ذكر
+</option>
+
+<option value="أنثى">
+    أنثى
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    تاريخ الميلاد
+</label>
+
+<input type="date"
+       id="patientBirth">
+
+</div>
+
+
+<div class="form-group full-width">
+
+<label>
+    العنوان
+</label>
+
+<input type="text"
+       id="patientAddress"
+       placeholder="العنوان">
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn"
+        id="patientSubmit">
+    💾 حفظ المريض
+</button>
+
+
+<button type="button"
+        class="btn gray-btn"
+        onclick="cancelPatientEdit()">
+    إلغاء
+</button>
+
+
+</form>
+
+</div>
+
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>الاسم</th>
+<th>الهاتف</th>
+<th>النوع</th>
+<th>تاريخ الميلاد</th>
+<th>العنوان</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="patientsTable">
+</tbody>
+
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     الأطباء
+========================= -->
+
+<section class="page"
+         id="doctors">
+
+<div class="section">
+
+<h2 class="section-title">
+    👨‍⚕️ إدارة الأطباء
+</h2>
+
+
+<div class="form-box">
+
+<form id="doctorForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم الطبيب
+</label>
+
+<input type="text"
+       id="doctorName"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    التخصص
+</label>
+
+<input type="text"
+       id="doctorSpecialty"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    رقم الهاتف
+</label>
+
+<input type="text"
+       id="doctorPhone">
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    البريد الإلكتروني
+</label>
+
+<input type="email"
+       id="doctorEmail">
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn">
+    💾 حفظ الطبيب
+</button>
+
+
+</form>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>اسم الطبيب</th>
+<th>التخصص</th>
+<th>الهاتف</th>
+<th>البريد</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="doctorsTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     المواعيد
+========================= -->
+
+<section class="page"
+         id="appointments">
+
+<div class="section">
+
+<h2 class="section-title">
+    📅 إدارة المواعيد
+</h2>
+
+
+<div class="form-box">
+
+<form id="appointmentForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم المريض
+</label>
+
+<input type="text"
+       id="appointmentPatient"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    اسم الطبيب
+</label>
+
+<input type="text"
+       id="appointmentDoctor"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    التاريخ
+</label>
+
+<input type="date"
+       id="appointmentDate"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    الوقت
+</label>
+
+<input type="time"
+       id="appointmentTime"
+       required>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn">
+    💾 حفظ الموعد
+</button>
+
+
+</form>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>المريض</th>
+<th>الطبيب</th>
+<th>التاريخ</th>
+<th>الوقت</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="appointmentsTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     الزيارات
+========================= -->
+
+<section class="page"
+         id="visits">
+
+<div class="section">
+
+<h2 class="section-title">
+    🩺 إدارة الزيارات
+</h2>
+
+
+<div class="form-box">
+
+<form id="visitForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم المريض
+</label>
+
+<input type="text"
+       id="visitPatient"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    اسم الطبيب
+</label>
+
+<input type="text"
+       id="visitDoctor"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    تاريخ الزيارة
+</label>
+
+<input type="date"
+       id="visitDate"
+       required>
+
+</div>
+
+
+<div class="form-group full-width">
+
+<label>
+    ملاحظات الزيارة
+</label>
+
+<textarea id="visitNotes"
+          rows="4"></textarea>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn">
+    💾 تسجيل الزيارة
+</button>
+
+
+</form>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>المريض</th>
+<th>الطبيب</th>
+<th>التاريخ</th>
+<th>الملاحظات</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="visitsTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     الخدمات
+========================= -->
+
+<section class="page"
+         id="services">
+
+<div class="section">
+
+<h2 class="section-title">
+    🧾 إدارة الخدمات
+</h2>
+
+
+<div class="form-box">
+
+<form id="serviceForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم الخدمة
+</label>
+
+<input type="text"
+       id="serviceName"
+       placeholder="مثال: كشف طبي"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    السعر
+</label>
+
+<input type="number"
+       id="servicePrice"
+       required>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn">
+    💾 حفظ الخدمة
+</button>
+
+
+</form>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>الخدمة</th>
+<th>السعر</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="servicesTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     المدفوعات
+========================= -->
+
+<section class="page"
+         id="payments">
+
+<div class="section">
+
+<h2 class="section-title">
+    💰 إدارة المدفوعات
+</h2>
+
+
+<div class="form-box">
+
+<form id="paymentForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+    اسم المريض
+</label>
+
+<input type="text"
+       id="paymentPatient"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    المبلغ
+</label>
+
+<input type="number"
+       id="paymentAmount"
+       required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    طريقة الدفع
+</label>
+
+<select id="paymentMethod">
+
+<option>
+    نقدي
+</option>
+
+<option>
+    بطاقة
+</option>
+
+<option>
+    تحويل إلكتروني
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+    التاريخ
+</label>
+
+<input type="date"
+       id="paymentDate"
+       required>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button type="submit"
+        class="btn save-btn">
+    💾 حفظ الدفعة
+</button>
+
+
+</form>
+
+</div>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>#</th>
+<th>المريض</th>
+<th>المبلغ</th>
+<th>طريقة الدفع</th>
+<th>التاريخ</th>
+<th>الإجراء</th>
+</tr>
+
+</thead>
+
+
+<tbody id="paymentsTable">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     التقارير
+========================= -->
+
+<section class="page"
+         id="reports">
+
+<div class="section">
+
+<h2 class="section-title">
+    📊 التقارير والإحصائيات
+</h2>
+
+
+<div class="stats">
+
+
+<div class="stat-card">
+
+<div class="stat-icon">👤</div>
+
+<div class="stat-title">
+المرضى
+</div>
+
+<div class="stat-number"
+     id="reportPatients">
+0
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">👨‍⚕️</div>
+
+<div class="stat-title">
+الأطباء
+</div>
+
+<div class="stat-number"
+     id="reportDoctors">
+0
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">📅</div>
+
+<div class="stat-title">
+المواعيد
+</div>
+
+<div class="stat-number"
+     id="reportAppointments">
+0
+</div>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-icon">🩺</div>
+
+<div class="stat-title">
+الزيارات
+</div>
+
+<div class="stat-number"
+     id="reportVisits">
+0
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-title">
+إجمالي المدفوعات
+</div>
+
+<div class="stat-number"
+     id="totalPayments">
+0 جنيه
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     المستخدمون
+========================= -->
+
+<section class="page"
+         id="users">
+
+<div class="section">
+
+<h2 class="section-title">
+    👥 المستخدمون
+</h2>
+
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>اسم المستخدم</th>
+<th>الاسم</th>
+<th>الصلاحية</th>
+<th>الحالة</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+<td>admin</td>
+<td>مدير النظام</td>
+<td>مدير</td>
+<td>نشط</td>
+</tr>
+
+
+<tr>
+<td>reception</td>
+<td>موظف الاستقبال</td>
+<td>استقبال</td>
+<td>نشط</td>
+</tr>
+
+
+<tr>
+<td>doctor</td>
+<td>الطبيب</td>
+<td>طبيب</td>
+<td>نشط</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     JavaScript
+========================= -->
+
+<script>
+
+/* =========================
+   تحميل البيانات
+========================= */
+
+let patients =
+JSON.parse(localStorage.getItem("clinic_patients") || "[]");
+
+let doctors =
+JSON.parse(localStorage.getItem("clinic_doctors") || "[]");
+
+let appointments =
+JSON.parse(localStorage.getItem("clinic_appointments") || "[]");
+
+let visits =
+JSON.parse(localStorage.getItem("clinic_visits") || "[]");
+
+let services =
+JSON.parse(localStorage.getItem("clinic_services") || "[]");
+
+let payments =
+JSON.parse(localStorage.getItem("clinic_payments") || "[]");
+
+
+/* =========================
+   فتح وإغلاق القائمة
+========================= */
+
+function toggleMenu(){
+
+    document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+
+}
+
+
+/* =========================
+   الانتقال بين الصفحات
+========================= */
+
+function showPage(pageId,menuItem){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(function(page){
+
+        page.classList.remove("active-page");
+
+    });
+
+
+    const page =
+        document.getElementById(pageId);
+
+
+    if(page){
+
+        page.classList.add("active-page");
+
+    }
+
+
+    document
+    .querySelectorAll(".menu-item")
+    .forEach(function(item){
+
+        item.classList.remove("active");
+
+    });
+
+
+    if(menuItem){
+
+        menuItem.classList.add("active");
+
+    }
+
+
+    const titles = {
+
+        home:"لوحة التحكم",
+
+        patients:"إدارة المرضى",
+
+        doctors:"إدارة الأطباء",
+
+        appointments:"إدارة المواعيد",
+
+        visits:"إدارة الزيارات",
+
+        services:"إدارة الخدمات",
+
+        payments:"إدارة المدفوعات",
+
+        reports:"التقارير والإحصائيات",
+
+        users:"المستخدمون"
+
+    };
+
+
+    document
+    .getElementById("pageTitle")
+    .textContent =
+        titles[pageId] || "لوحة التحكم";
+
+
+    document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+
+    window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   حفظ البيانات
+========================= */
+
+function saveAll(){
+
+    localStorage.setItem(
+        "clinic_patients",
+        JSON.stringify(patients)
+    );
+
+    localStorage.setItem(
+        "clinic_doctors",
+        JSON.stringify(doctors)
+    );
+
+    localStorage.setItem(
+        "clinic_appointments",
+        JSON.stringify(appointments)
+    );
+
+    localStorage.setItem(
+        "clinic_visits",
+        JSON.stringify(visits)
+    );
+
+    localStorage.setItem(
+        "clinic_services",
+        JSON.stringify(services)
+    );
+
+    localStorage.setItem(
+        "clinic_payments",
+        JSON.stringify(payments)
+    );
+
+}
+
+
+/* =========================
+   تحديث الأعداد
+========================= */
+
+function updateCounts(){
+
+    document
+    .getElementById("patientCount")
+    .textContent =
+        patients.length;
+
+
+    document
+    .getElementById("doctorCount")
+    .textContent =
+        doctors.length;
+
+
+    document
+    .getElementById("appointmentCount")
+    .textContent =
+        appointments.length;
+
+
+    document
+    .getElementById("paymentCount")
+    .textContent =
+        payments.length;
+
+
+    document
+    .getElementById("reportPatients")
+    .textContent =
+        patients.length;
+
+
+    document
+    .getElementById("reportDoctors")
+    .textContent =
+        doctors.length;
+
+
+    document
+    .getElementById("reportAppointments")
+    .textContent =
+        appointments.length;
+
+
+    document
+    .getElementById("reportVisits")
+    .textContent =
+        visits.length;
+
+
+    let total = 0;
+
+    payments.forEach(function(payment){
+
+        total += Number(payment.amount || 0);
+
+    });
+
+
+    document
+    .getElementById("totalPayments")
+    .textContent =
+        total + " جنيه";
+
+}
+
+
+/* =========================
+   المرضى
+========================= */
+
+function renderPatients(){
+
+    const table =
+        document.getElementById("patientsTable");
+
+
+    table.innerHTML = "";
+
+
+    if(patients.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="7"
+                class="empty-message">
+                لا توجد بيانات مرضى حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    patients.forEach(function(patient,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${patient.name}</td>
+
+            <td>${patient.phone}</td>
+
+            <td>${patient.gender || "-"}</td>
+
+            <td>${patient.birth || "-"}</td>
+
+            <td>${patient.address || "-"}</td>
+
+            <td>
+
+                <button
+                    class="btn edit-btn"
+                    onclick="editPatient(${patient.id})">
+                    تعديل
+                </button>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deletePatient(${patient.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+/* =========================
+   حفظ المريض
+========================= */
+
+document
+.getElementById("patientForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const id =
+        document.getElementById("patientId").value;
+
+
+    const patient = {
+
+        id:
+            id ? Number(id) : Date.now(),
+
+        name:
+            document.getElementById("patientName").value.trim(),
+
+        phone:
+            document.getElementById("patientPhone").value.trim(),
+
+        gender:
+            document.getElementById("patientGender").value,
+
+        birth:
+            document.getElementById("patientBirth").value,
+
+        address:
+            document.getElementById("patientAddress").value.trim()
+
+    };
+
+
+    if(id){
+
+        const index =
+            patients.findIndex(function(item){
+
+                return item.id === Number(id);
+
+            });
+
+
+        if(index !== -1){
+
+            patients[index] = patient;
+
+        }
+
+        alert("✅ تم تعديل بيانات المريض");
+
+    }
+
+    else{
+
+        patients.push(patient);
+
+        alert("✅ تم حفظ المريض بنجاح");
+
+    }
+
+
+    saveAll();
+
+    renderPatients();
+
+    updateCounts();
+
+    cancelPatientEdit();
+
+});
+
+
+/* =========================
+   تعديل المريض
+========================= */
+
+function editPatient(id){
+
+    const patient =
+        patients.find(function(item){
+
+            return item.id === id;
+
+        });
+
+
+    if(!patient){
+
+        return;
+
+    }
+
+
+    document
+    .getElementById("patientId")
+    .value = patient.id;
+
+
+    document
+    .getElementById("patientName")
+    .value = patient.name;
+
+
+    document
+    .getElementById("patientPhone")
+    .value = patient.phone;
+
+
+    document
+    .getElementById("patientGender")
+    .value = patient.gender;
+
+
+    document
+    .getElementById("patientBirth")
+    .value = patient.birth;
+
+
+    document
+    .getElementById("patientAddress")
+    .value = patient.address;
+
+
+    document
+    .getElementById("patientSubmit")
+    .textContent =
+        "✏️ حفظ التعديل";
+
+
+    showPage("patients");
+
+}
+
+
+/* =========================
+   حذف المريض
+========================= */
+
+function deletePatient(id){
+
+    if(!confirm("هل تريد حذف هذا المريض؟")){
+
+        return;
+
+    }
+
+
+    patients =
+        patients.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderPatients();
+
+    updateCounts();
+
+}
+
+
+/* =========================
+   إلغاء
+========================= */
+
+function cancelPatientEdit(){
+
+    document
+    .getElementById("patientForm")
+    .reset();
+
+
+    document
+    .getElementById("patientId")
+    .value = "";
+
+
+    document
+    .getElementById("patientSubmit")
+    .textContent =
+        "💾 حفظ المريض";
+
+}
+
+
+/* =========================
+   الأطباء
+========================= */
+
+function renderDoctors(){
+
+    const table =
+        document.getElementById("doctorsTable");
+
+
+    table.innerHTML = "";
+
+
+    if(doctors.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="6"
+                class="empty-message">
+                لا توجد بيانات أطباء حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    doctors.forEach(function(doctor,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${doctor.name}</td>
+
+            <td>${doctor.specialty}</td>
+
+            <td>${doctor.phone || "-"}</td>
+
+            <td>${doctor.email || "-"}</td>
+
+            <td>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deleteDoctor(${doctor.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+document
+.getElementById("doctorForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    doctors.push({
+
+        id:Date.now(),
+
+        name:
+            document.getElementById("doctorName").value,
+
+        specialty:
+            document.getElementById("doctorSpecialty").value,
+
+        phone:
+            document.getElementById("doctorPhone").value,
+
+        email:
+            document.getElementById("doctorEmail").value
+
+    });
+
+
+    saveAll();
+
+    renderDoctors();
+
+    updateCounts();
+
+    this.reset();
+
+    alert("✅ تم حفظ الطبيب");
+
+});
+
+
+function deleteDoctor(id){
+
+    if(!confirm("هل تريد حذف الطبيب؟")){
+
+        return;
+
+    }
+
+
+    doctors =
+        doctors.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderDoctors();
+
+    updateCounts();
+
+}
+
+
+/* =========================
+   المواعيد
+========================= */
+
+function renderAppointments(){
+
+    const table =
+        document.getElementById("appointmentsTable");
+
+
+    table.innerHTML = "";
+
+
+    if(appointments.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="6"
+                class="empty-message">
+                لا توجد مواعيد حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    appointments.forEach(function(item,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${item.patient}</td>
+
+            <td>${item.doctor}</td>
+
+            <td>${item.date}</td>
+
+            <td>${item.time}</td>
+
+            <td>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deleteAppointment(${item.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+document
+.getElementById("appointmentForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    appointments.push({
+
+        id:Date.now(),
+
+        patient:
+            document.getElementById("appointmentPatient").value,
+
+        doctor:
+            document.getElementById("appointmentDoctor").value,
+
+        date:
+            document.getElementById("appointmentDate").value,
+
+        time:
+            document.getElementById("appointmentTime").value
+
+    });
+
+
+    saveAll();
+
+    renderAppointments();
+
+    updateCounts();
+
+    this.reset();
+
+    alert("✅ تم حفظ الموعد");
+
+});
+
+
+function deleteAppointment(id){
+
+    appointments =
+        appointments.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderAppointments();
+
+    updateCounts();
+
+}
+
+
+/* =========================
+   الزيارات
+========================= */
+
+function renderVisits(){
+
+    const table =
+        document.getElementById("visitsTable");
+
+
+    table.innerHTML = "";
+
+
+    if(visits.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="6"
+                class="empty-message">
+                لا توجد زيارات حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    visits.forEach(function(item,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${item.patient}</td>
+
+            <td>${item.doctor}</td>
+
+            <td>${item.date}</td>
+
+            <td>${item.notes || "-"}</td>
+
+            <td>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deleteVisit(${item.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+document
+.getElementById("visitForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    visits.push({
+
+        id:Date.now(),
+
+        patient:
+            document.getElementById("visitPatient").value,
+
+        doctor:
+            document.getElementById("visitDoctor").value,
+
+        date:
+            document.getElementById("visitDate").value,
+
+        notes:
+            document.getElementById("visitNotes").value
+
+    });
+
+
+    saveAll();
+
+    renderVisits();
+
+    updateCounts();
+
+    this.reset();
+
+    alert("✅ تم تسجيل الزيارة");
+
+});
+
+
+function deleteVisit(id){
+
+    visits =
+        visits.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderVisits();
+
+    updateCounts();
+
+}
+
+
+/* =========================
+   الخدمات
+========================= */
+
+function renderServices(){
+
+    const table =
+        document.getElementById("servicesTable");
+
+
+    table.innerHTML = "";
+
+
+    if(services.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="4"
+                class="empty-message">
+                لا توجد خدمات حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    services.forEach(function(item,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${item.name}</td>
+
+            <td>${item.price} جنيه</td>
+
+            <td>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deleteService(${item.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+document
+.getElementById("serviceForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    services.push({
+
+        id:Date.now(),
+
+        name:
+            document.getElementById("serviceName").value,
+
+        price:
+            document.getElementById("servicePrice").value
+
+    });
+
+
+    saveAll();
+
+    renderServices();
+
+    this.reset();
+
+    alert("✅ تم حفظ الخدمة");
+
+});
+
+
+function deleteService(id){
+
+    services =
+        services.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderServices();
+
+}
+
+
+/* =========================
+   المدفوعات
+========================= */
+
+function renderPayments(){
+
+    const table =
+        document.getElementById("paymentsTable");
+
+
+    table.innerHTML = "";
+
+
+    if(payments.length === 0){
+
+        table.innerHTML = `
+        <tr>
+            <td colspan="6"
+                class="empty-message">
+                لا توجد مدفوعات حتى الآن
+            </td>
+        </tr>`;
+
+        return;
+
+    }
+
+
+    payments.forEach(function(item,index){
+
+        table.innerHTML += `
+        <tr>
+
+            <td>${index+1}</td>
+
+            <td>${item.patient}</td>
+
+            <td>${item.amount} جنيه</td>
+
+            <td>${item.method}</td>
+
+            <td>${item.date}</td>
+
+            <td>
+
+                <button
+                    class="btn delete-btn"
+                    onclick="deletePayment(${item.id})">
+                    حذف
+                </button>
+
+            </td>
+
+        </tr>`;
+
+    });
+
+}
+
+
+document
+.getElementById("paymentForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    payments.push({
+
+        id:Date.now(),
+
+        patient:
+            document.getElementById("paymentPatient").value,
+
+        amount:
+            document.getElementById("paymentAmount").value,
+
+        method:
+            document.getElementById("paymentMethod").value,
+
+        date:
+            document.getElementById("paymentDate").value
+
+    });
+
+
+    saveAll();
+
+    renderPayments();
+
+    updateCounts();
+
+    this.reset();
+
+    alert("✅ تم تسجيل الدفعة");
+
+});
+
+
+function deletePayment(id){
+
+    payments =
+        payments.filter(function(item){
+
+            return item.id !== id;
+
+        });
+
+
+    saveAll();
+
+    renderPayments();
+
+    updateCounts();
+
+}
+
+
+/* =========================
+   تسجيل الخروج
+========================= */
+
+function logout(){
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =========================
+   تشغيل النظام
+========================= */
+
+renderPatients();
+
+renderDoctors();
+
+renderAppointments();
+
+renderVisits();
+
+renderServices();
+
+renderPayments();
+
+updateCounts();
+
+</script>
+
+</body>
+</html>

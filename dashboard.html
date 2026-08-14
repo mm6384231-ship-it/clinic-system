@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>لوحة تحكم العيادة الطبية</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<div class="dashboard" id="dashboard">
+
+
+    <!-- =========================
+         القائمة الجانبية
+         ========================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ⚕️
+            </div>
+
+            <h2>
+                إدارة العيادة الطبية
+            </h2>
+
+        </div>
+
+
+        <div class="menu-item active"
+             onclick="showPage('home', this)">
+
+            🏠
+            <span>الرئيسية</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('patients', this)">
+
+            👤
+            <span>المرضى</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('doctors', this)">
+
+            👨‍⚕️
+            <span>الأطباء</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('appointments', this)">
+
+            📅
+            <span>المواعيد</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('visits', this)">
+
+            🩺
+            <span>الزيارات</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('services', this)">
+
+            🧾
+            <span>الخدمات</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('payments', this)">
+
+            💰
+            <span>المدفوعات</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('reports', this)">
+
+            📊
+            <span>التقارير</span>
+
+        </div>
+
+
+        <div class="menu-item"
+             onclick="showPage('users', this)">
+
+            👥
+            <span>المستخدمون</span>
+
+        </div>
+
+
+        <div class="menu-item logout"
+             onclick="logout()">
+
+            🚪
+            <span>تسجيل الخروج</span>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         المحتوى الرئيسي
+         ========================= -->
+
+    <main class="main-content">
+
+
+        <!-- الشريط العلوي -->
+
+        <div class="topbar">
+
+            <h1 id="pageTitle">
+                لوحة التحكم
+            </h1>
+
+            <div class="user-info">
+                👤 مدير النظام
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             الصفحة الرئيسية
+             ========================= -->
+
+        <section class="page" id="home">
+
+            <div class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👤
+                    </div>
+
+                    <div class="stat-title">
+                        إجمالي المرضى
+                    </div>
+
+                    <div class="stat-number"
+                         id="patientCount">
+                        0
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👨‍⚕️
+                    </div>
+
+                    <div class="stat-title">
+                        الأطباء
+                    </div>
+
+                    <div class="stat-number"
+                         id="doctorCount">
+                        0
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📅
+                    </div>
+
+                    <div class="stat-title">
+                        المواعيد
+                    </div>
+
+                    <div class="stat-number"
+                         id="appointmentCount">
+                        0
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💰
+                    </div>
+
+                    <div class="stat-title">
+                        المدفوعات
+                    </div>
+
+                    <div class="stat-number"
+                         id="paymentCount">
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    ⚡ الإجراءات السريعة
+                </h2>
+
+
+                <div class="quick-actions">
+
+                    <button onclick="showPage('patients')">
+                        ➕ إضافة مريض
+                    </button>
+
+                    <button onclick="showPage('doctors')">
+                        👨‍⚕️ إضافة طبيب
+                    </button>
+
+                    <button onclick="showPage('appointments')">
+                        📅 حجز موعد
+                    </button>
+
+                    <button onclick="showPage('visits')">
+                        🩺 تسجيل زيارة
+                    </button>
+
+                    <button onclick="showPage('payments')">
+                        💰 تسجيل دفعة
+                    </button>
+
+                    <button onclick="showPage('reports')">
+                        📊 التقارير
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    📌 نبذة عن النظام
+                </h2>
+
+                <p style="line-height:2;color:#666;">
+
+                    نظام معلومات إداري تجريبي يهدف إلى
+                    تنظيم وإدارة بيانات العيادة الطبية،
+                    بما يشمل المرضى والأطباء والمواعيد
+                    والزيارات والخدمات والمدفوعات
+                    والتقارير الإدارية.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             المرضى
+             ========================= -->
+
+        <section class="page" id="patients">
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    👤 إدارة المرضى
+                </h2>
+
+
+                <div class="form-box">
+
+                    <form id="patientForm">
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم المريض
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="patientName"
+                                    placeholder="اسم المريض"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    رقم الهاتف
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="patientPhone"
+                                    placeholder="رقم الهاتف"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    النوع
+                                </label>
+
+                                <select id="patientGender">
+
+                                    <option value="">
+                                        اختر النوع
+                                    </option>
+
+                                    <option value="ذكر">
+                                        ذكر
+                                    </option>
+
+                                    <option value="أنثى">
+                                        أنثى
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    تاريخ الميلاد
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="patientBirth">
+
+                            </div>
+
+
+
+                            <div class="form-group full-width">
+
+                                <label>
+                                    العنوان
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="patientAddress"
+                                    placeholder="العنوان">
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            💾 حفظ المريض
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    #
+                                </th>
+
+                                <th>
+                                    الاسم
+                                </th>
+
+                                <th>
+                                    الهاتف
+                                </th>
+
+                                <th>
+                                    النوع
+                                </th>
+
+                                <th>
+                                    تاريخ الميلاد
+                                </th>
+
+                                <th>
+                                    العنوان
+                                </th>
+
+                                <th>
+                                    الإجراء
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="patientsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             الأطباء
+             ========================= -->
+
+        <section class="page" id="doctors">
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    👨‍⚕️ إدارة الأطباء
+                </h2>
+
+
+                <div class="form-box">
+
+                    <form id="doctorForm">
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم الطبيب
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="doctorName"
+                                    placeholder="اسم الطبيب"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    التخصص
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="doctorSpecialty"
+                                    placeholder="التخصص"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    رقم الهاتف
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="doctorPhone"
+                                    placeholder="رقم الهاتف">
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    البريد الإلكتروني
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="doctorEmail"
+                                    placeholder="البريد الإلكتروني">
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            💾 حفظ الطبيب
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>
+                                    اسم الطبيب
+                                </th>
+
+                                <th>
+                                    التخصص
+                                </th>
+
+                                <th>
+                                    الهاتف
+                                </th>
+
+                                <th>
+                                    البريد
+                                </th>
+
+                                <th>
+                                    الإجراء
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="doctorsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             المواعيد
+             ========================= -->
+
+        <section class="page" id="appointments">
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    📅 إدارة المواعيد
+                </h2>
+
+
+                <div class="form-box">
+
+                    <form id="appointmentForm">
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم المريض
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="appointmentPatient"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم الطبيب
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="appointmentDoctor"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    التاريخ
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="appointmentDate"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    الوقت
+                                </label>
+
+                                <input
+                                    type="time"
+                                    id="appointmentTime"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            📅 حجز الموعد
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>
+                                    المريض
+                                </th>
+
+                                <th>
+                                    الطبيب
+                                </th>
+
+                                <th>
+                                    التاريخ
+                                </th>
+
+                                <th>
+                                    الوقت
+                                </th>
+
+                                <th>
+                                    الإجراء
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="appointmentsTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             الزيارات
+             ========================= -->
+
+        <section class="page" id="visits">
+
+            <div class="section">
+
+                <h2 class="section-title">
+                    🩺 تسجيل الزيارات
+                </h2>
+
+
+                <div class="form-box">
+
+                    <form id="visitForm">
+
+                        <div class="form-grid">
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم المريض
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="visitPatient"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    اسم الطبيب
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="visitDoctor"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label>
+                                    تاريخ الزيارة
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="visitDate"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group full-width">
+
+                                <label>
+                                    ملاحظات الزيارة
+                                </label>
+
+                                <textarea
+                                    id="visitNotes"
+                                    rows="4"
+                                    placeholder="اكتب ملاحظات الزيارة">
+
+                                </textarea>
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            💾 تسجيل الزيارة
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <

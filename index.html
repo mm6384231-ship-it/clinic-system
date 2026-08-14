@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>نظام إدارة العيادة الطبية</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         صفحة تسجيل الدخول
+    ========================== -->
+
+    <div class="login-page">
+
+        <div class="login-box">
+
+            <div class="logo">
+                ⚕️
+            </div>
+
+
+            <h1>
+                نظام إدارة العيادة الطبية
+            </h1>
+
+
+            <p class="subtitle">
+                نظام المعلومات الإداري لإدارة العيادة
+            </p>
+
+
+            <form id="loginForm">
+
+
+                <div class="input-group">
+
+                    <label for="username">
+                        اسم المستخدم
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="أدخل اسم المستخدم"
+                        autocomplete="username"
+                        required>
+
+                </div>
+
+
+
+                <div class="input-group">
+
+                    <label for="password">
+                        كلمة المرور
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="أدخل كلمة المرور"
+                        autocomplete="current-password"
+                        required>
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="login-button">
+
+                    🔐 تسجيل الدخول
+
+                </button>
+
+
+            </form>
+
+
+
+            <div
+                id="loginMessage"
+                class="login-message">
+            </div>
+
+
+
+            <div class="login-info">
+
+                <p>
+                    بيانات الدخول التجريبية
+                </p>
+
+                <span>
+                    اسم المستخدم:
+                    <b>admin</b>
+                </span>
+
+                <span>
+                    كلمة المرور:
+                    <b>1234</b>
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         تشغيل تسجيل الدخول
+    ========================== -->
+
+    <script>
+
+    document
+    .getElementById("loginForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document.getElementById("username").value.trim();
+
+
+        const password =
+            document.getElementById("password").value;
+
+
+        const message =
+            document.getElementById("loginMessage");
+
+
+
+        /* بيانات الدخول التجريبية */
+
+        if (
+            username === "admin" &&
+            password === "1234"
+        ) {
+
+
+            /* حفظ حالة تسجيل الدخول */
+
+            localStorage.setItem(
+                "clinic_logged_in",
+                "true"
+            );
+
+
+            localStorage.setItem(
+                "clinic_username",
+                username
+            );
+
+
+            message.textContent =
+                "✅ تم تسجيل الدخول بنجاح";
+
+
+            message.style.color =
+                "#2e8b57";
+
+
+            /*
+             * الانتقال إلى لوحة التحكم
+             */
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "dashboard2.html";
+
+            }, 500);
+
+
+        } else {
+
+
+            message.textContent =
+                "❌ اسم المستخدم أو كلمة المرور غير صحيحة";
+
+
+            message.style.color =
+                "#d73535";
+
+        }
+
+    });
+
+    </script>
+
+</body>
+
+</html> 

@@ -1,0 +1,234 @@
+/* =========================================
+   نظام إدارة العيادة الطبية
+   ملف التصميم الرئيسي
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    direction: rtl;
+}
+
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    background: #f3f7fb;
+    color: #222;
+}
+
+
+/* =========================================
+   صفحة تسجيل الدخول
+   ========================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e6f4ff,
+            #ffffff
+        );
+}
+
+
+/* صندوق تسجيل الدخول */
+
+.login-box {
+    width: 100%;
+    max-width: 430px;
+
+    background: #ffffff;
+
+    padding: 35px 28px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 10px 35px rgba(0, 70, 130, 0.15);
+
+    text-align: center;
+}
+
+
+/* الشعار */
+
+.logo {
+    width: 85px;
+    height: 85px;
+
+    margin: 0 auto 18px;
+
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #0877c9;
+
+    color: white;
+
+    font-size: 42px;
+
+    box-shadow:
+        0 6px 15px rgba(8, 119, 201, 0.25);
+}
+
+
+/* عنوان النظام */
+
+.login-box h1 {
+    color: #075b9d;
+
+    font-size: 24px;
+
+    line-height: 1.5;
+
+    margin-bottom: 8px;
+}
+
+
+/* الوصف */
+
+.subtitle {
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 28px;
+}
+
+
+/* مجموعات الإدخال */
+
+.input-group {
+    text-align: right;
+
+    margin-bottom: 17px;
+}
+
+
+.input-group label {
+    display: block;
+
+    font-weight: bold;
+
+    color: #333;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+}
+
+
+/* حقول الإدخال */
+
+.input-group input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #d6e1ea;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    background: #fff;
+
+    transition: 0.2s;
+}
+
+
+.input-group input:focus {
+    border-color: #0877c9;
+
+    box-shadow:
+        0 0 0 3px rgba(8, 119, 201, 0.10);
+}
+
+
+/* زر تسجيل الدخول */
+
+.login-button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #0877c9;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.login-button:hover {
+    background: #075b9d;
+}
+
+
+.login-button:active {
+    transform: scale(0.98);
+}
+
+
+/* رسالة تسجيل الدخول */
+
+.login-message {
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* معلومات الدخول التجريبية */
+
+.login-info {
+    margin-top: 25px;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    background: #f1f8fd;
+
+    border: 1px solid #dcecf7;
+
+    color: #666;
+
+    font-size: 12px;
+
+    line-height: 2;
+}
+
+
+.login-info p {
+   
