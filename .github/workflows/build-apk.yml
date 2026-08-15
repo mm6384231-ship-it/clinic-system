@@ -25,6 +25,12 @@ jobs:
         run: |
           mkdir -p app/src/main/java/com/clinic/system
           mkdir -p app/src/main/res/values
+          mkdir -p app/src/main/res/drawable
+          mkdir -p app/src/main/res/mipmap-hdpi
+          mkdir -p app/src/main/res/mipmap-mdpi
+          mkdir -p app/src/main/res/mipmap-xhdpi
+          mkdir -p app/src/main/res/mipmap-xxhdpi
+          mkdir -p app/src/main/res/mipmap-xxxhdpi
 
           cat > settings.gradle <<'EOF'
           pluginManagement {
@@ -66,8 +72,8 @@ jobs:
                   applicationId "com.clinic.system"
                   minSdk 23
                   targetSdk 35
-                  versionCode 1
-                  versionName "1.0"
+                  versionCode 2
+                  versionName "2.0"
               }
           }
 
@@ -79,12 +85,37 @@ jobs:
 
           cat > app/src/main/res/values/styles.xml <<'EOF'
           <resources>
+
               <style name="AppTheme"
                   parent="android:style/Theme.Material.Light.NoActionBar">
+
                   <item name="android:fontFamily">sans</item>
-                  <item name="android:colorAccent">#075b9d</item>
+                  <item name="android:colorAccent">#0878B8</item>
+                  <item name="android:navigationBarColor">#F4F8FA</item>
+                  <item name="android:statusBarColor">#0878B8</item>
+                  <item name="android:windowLightStatusBar">false</item>
+
               </style>
+
           </resources>
+          EOF
+
+          cat > app/src/main/res/drawable/ic_clinic.xml <<'EOF'
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="108dp"
+              android:height="108dp"
+              android:viewportWidth="108"
+              android:viewportHeight="108">
+
+              <path
+                  android:fillColor="#0878B8"
+                  android:pathData="M54,4A50,50 0,1 0,54 104A50,50 0,1 0,54 4" />
+
+              <path
+                  android:fillColor="#FFFFFF"
+                  android:pathData="M45,20L63,20L63,45L88,45L88,63L63,63L63,88L45,88L45,63L20,63L20,45L45,45Z" />
+
+          </vector>
           EOF
 
           cat > app/src/main/AndroidManifest.xml <<'EOF'
@@ -94,11 +125,16 @@ jobs:
 
               <application
                   android:theme="@style/AppTheme"
-                  android:label="نظام إدارة العيادة الطبية">
+                  android:label="نظام إدارة العيادة"
+                  android:icon="@drawable/ic_clinic"
+                  android:roundIcon="@drawable/ic_clinic"
+                  android:allowBackup="false"
+                  android:supportsRtl="true">
 
                   <activity
                       android:name=".MainActivity"
-                      android:exported="true">
+                      android:exported="true"
+                      android:screenOrientation="portrait">
 
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN"/>
@@ -108,6 +144,7 @@ jobs:
                   </activity>
 
               </application>
+
           </manifest>
           EOF
 
@@ -116,6 +153,13 @@ jobs:
 
           import android.app.Activity;
           import android.os.Bundle;
+          import android.os.Handler;
+          import android.graphics.Color;
+          import android.graphics.Typeface;
+          import android.view.Gravity;
+          import android.view.View;
+          import android.widget.LinearLayout;
+          import android.widget.TextView;
           import android.webkit.WebView;
           import android.webkit.WebViewClient;
 
@@ -127,13 +171,74 @@ jobs:
               protected void onCreate(Bundle savedInstanceState) {
                   super.onCreate(savedInstanceState);
 
+                  showSplash();
+
+                  new Handler().postDelayed(() -> {
+                      openClinic();
+                  }, 1200);
+              }
+
+              private void showSplash() {
+
+                  LinearLayout layout = new LinearLayout(this);
+                  layout.setOrientation(LinearLayout.VERTICAL);
+                  layout.setGravity(Gravity.CENTER);
+                  layout.setBackgroundColor(Color.rgb(244, 248, 250));
+
+                  TextView icon = new TextView(this);
+                  icon.setText("✚");
+                  icon.setTextSize(70);
+                  icon.setTextColor(Color.WHITE);
+                  icon.setGravity(Gravity.CENTER);
+                  icon.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+                  icon.setBackgroundColor(Color.rgb(8, 120, 184));
+
+                  LinearLayout.LayoutParams iconParams =
+                          new LinearLayout.LayoutParams(180, 180);
+
+                  iconParams.gravity = Gravity.CENTER;
+                  layout.addView(icon, iconParams);
+
+                  TextView title = new TextView(this);
+                  title.setText("نظام إدارة العيادة");
+                  title.setTextSize(25);
+                  title.setTextColor(Color.rgb(8, 70, 105));
+                  title.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+                  title.setGravity(Gravity.CENTER);
+
+                  LinearLayout.LayoutParams titleParams =
+                          new LinearLayout.LayoutParams(
+                                  LinearLayout.LayoutParams.MATCH_PARENT,
+                                  LinearLayout.LayoutParams.WRAP_CONTENT
+                          );
+
+                  titleParams.setMargins(0, 35, 0, 10);
+                  layout.addView(title, titleParams);
+
+                  TextView subtitle = new TextView(this);
+                  subtitle.setText("إدارة المرضى والمواعيد بسهولة");
+                  subtitle.setTextSize(16);
+                  subtitle.setTextColor(Color.DKGRAY);
+                  subtitle.setGravity(Gravity.CENTER);
+
+                  layout.addView(subtitle);
+
+                  setContentView(layout);
+              }
+
+              private void openClinic() {
+
                   webView = new WebView(this);
                   setContentView(webView);
 
+                  webView.setBackgroundColor(Color.WHITE);
                   webView.setWebViewClient(new WebViewClient());
 
                   webView.getSettings().setJavaScriptEnabled(true);
                   webView.getSettings().setDomStorageEnabled(true);
+                  webView.getSettings().setDatabaseEnabled(true);
+                  webView.getSettings().setAllowFileAccess(true);
+                  webView.getSettings().setAllowContentAccess(true);
 
                   webView.loadUrl(
                       "https://mm6384231-ship-it.github.io/clinic-system/"
@@ -142,7 +247,8 @@ jobs:
 
               @Override
               public void onBackPressed() {
-                  if (webView.canGoBack()) {
+
+                  if (webView != null && webView.canGoBack()) {
                       webView.goBack();
                   } else {
                       super.onBackPressed();
